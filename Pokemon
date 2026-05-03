@@ -1,0 +1,39 @@
+git clone https://github.com/pret/poryemerald.git
+cd poryemerald
+void CreateBoxPokemon_Ultimate(struct BoxPokemon *boxMon, u16 species, u8 level) {
+u32 i;
+u32 fixedIV = 31;
+u32 otid = GetMonData(boxMon, MON_DATA_OT_ID);
+
+// 強制 6V
+for (i = 0; i < 6; i++) 
+    SetBoxMonData(boxMon, MON_DATA_HP_IV + i, &fixedIV);
+
+// 強制異色 (PID 運算公式)
+u32 shinyPID = (((otid >> 16) ^ (otid & 0xFFFF) ^ 0x0000) << 16) | (Random() & 0xFFFF);
+SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &shinyPID);
+}
+#define MAX_LEVEL 255 // 將上限改為 255
+#define EXP_MAX 16000000 // 擴張經驗值上限以支持 Lv.255
+bool8 AbilityCheck_Dual(u8 battlerId, u16 abilityId) {
+u16 abil1 = gBaseStats[gBattleMons[battlerId].species].abilities[0];
+u16 abilH = gBaseStats[gBattleMons[battlerId].species].abilities[2]; // 夢特位元
+
+return (abil1 == abilityId || abilH == abilityId);
+}
+// 傷害計算加成：Rank S 威力 x 1.5
+if (GetMoveRank(attacker, move) == RANK_S) {
+damage = (damage * 150) / 100;
+if (Random() % 2 == 0) gBattleMoves[move].pp = 0; // 50% PP 減免
+}
+[SPECIES_GIGATON_HAMMER_USER] = {
+.abilities = { ABILITY_MOLD_BREAKER, ABILITY_OWN_TEMPO, ABILITY_STEELY_SPIRIT }, // 特性1, 2, 夢特
+},
+
+1. 擴展 ROM 容量到 32MB
+
+sed -i 's/16M/32M/g' ld_script.ld
+
+2. 開始編譯 (利用多核心加速)
+
+make -j$(nproc)
